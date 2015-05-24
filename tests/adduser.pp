@@ -1,16 +1,21 @@
+user { ['lbetz', 'tredel', 'tgelf']:
+  ensure     => present,
+  managehome => true,
+}
+
 system::user { 'lbetz':
-  ensure  => present,
   key     => 'test1',
+  require => User['lbetz']
 }
 
 system::user { 'tredel':
-  ensure  => present,
   key     => 'test2',
   tag     => ['lbetz', 'tgelf'],
+  require => User['tredel']
 }
 
 system::user { 'tgelf':
-  ensure  => present,
   key     => 'test3',
   tag     => 'lbetz',
+  require => User['tgelf']
 }
