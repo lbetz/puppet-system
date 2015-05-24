@@ -62,7 +62,7 @@ define system::user(
   $ensure   = 'present',
   $user     = $title,
   $key_type = 'ssh-rsa',
-  $key,
+  $key      = false,
 ) {
 
   # Validation
@@ -80,10 +80,12 @@ define system::user(
     Ssh_authorized_key <| user == $user |> -> User[$user]
   }
 
-  create_resources('@ssh_authorized_key', $users, {
-    ensure => $ensure,
-    key    => $key,
-    type   => $key_type,
-  })
+  if $key {
+    create_resources('@ssh_authorized_key', $users, {
+      ensure => $ensure,
+      key    => $key,
+      type   => $key_type,
+    })
+  }
 
 }

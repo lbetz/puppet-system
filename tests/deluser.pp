@@ -3,6 +3,12 @@ user { ['lbetz', 'tredel']:
   managehome => true,
 }
 
+user { 'root':
+  ensure => present,
+}
+
+system::user { 'root': }
+
 system::user { 'lbetz':
   key     => 'test1',
 }
@@ -15,7 +21,7 @@ system::user { 'tredel':
 system::user { 'tgelf':
   ensure => absent,
   key    => 'test3',
-  tag    => 'lbetz',
+  tag    => ['lbetz', 'root'],
 }
 
 user { 'tgelf':

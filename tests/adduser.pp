@@ -3,19 +3,22 @@ user { ['lbetz', 'tredel', 'tgelf']:
   managehome => true,
 }
 
+user { 'root':
+  ensure => present,
+}
+
+system::user { 'root': }
+
 system::user { 'lbetz':
   key     => 'test1',
-  require => User['lbetz']
 }
 
 system::user { 'tredel':
   key     => 'test2',
   tag     => ['lbetz', 'tgelf'],
-  require => User['tredel']
 }
 
 system::user { 'tgelf':
   key     => 'test3',
-  tag     => 'lbetz',
-  require => User['tgelf']
+  tag     => ['lbetz', 'root'],
 }
